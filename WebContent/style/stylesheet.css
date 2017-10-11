@@ -1,0 +1,42 @@
+html{
+	height: 100%;
+	position: relative;
+	min-height: 100%;
+}
+
+.row {
+	margin-top: 10px !important;
+	font-weight: normal !important; 
+}
+
+.row label{
+	display: block text-transform: uppercase;
+	font-weight: normal !important; 
+}
+
+.row input, .row .ui-selectonemenu-label, .row .ui-selectonemenu{
+	height: 28px;
+	width: 100%; 
+}
+
+#quantidade{
+	font-weight: bold !important;
+	
+}
+
+
+.row label{
+	display:block;
+}
+
+.row .ui-radiobutton-box{
+	width: 21px !important;
+	height: 21px !important;
+}
+
+body { 
+	padding: 0 8 0 8 !important;
+	margin-top: 30px !important; 
+	
+	}
+	

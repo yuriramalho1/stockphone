@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+
+		<h:form id="formProduto">
+			
+		<p:toolbar>
+      
+ 
+        <f:facet name="right">
+            <p:menuButton value="Opções">
+                <p:menuitem value="Produto" url="http://localhost:8080/stockphone/pages/produto.jsf" 
+                icon="ui-icon-carat-1-e"  />
+                <p:menuitem value="Fornecedor" url="http://localhost:8080/stockphone/pages/fornecedor.jsf" 
+                icon="ui-icon-carat-1-e"/>
+                <p:menuitem value="Cliente" url="http://localhost:8080/stockphone/pages/cliente.jsf"
+                icon="ui-icon-carat-1-e" />
+                <p:menuitem value="Sair" url="http://localhost:8080/stockphone/login.jsf"
+                icon="ui-icon-extlink" />
+            </p:menuButton>
+        </f:facet>
+ 
+    </p:toolbar>
+			
+			<br/>
+			
+			<p:panel class="row" id="painelProduto" header="Cadastro de Produto">
+							<p:growl id="messages" showDetail="true" />
+				
+				
+				<div class="row">
+					<div class="col-md-6">
+						<p:outputLabel value="Nome" />
+						<p:inputText value="#{produtoBean.produto.nome}" />
+						<p/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<br/>
+						<p:outputLabel value="Valor" />
+						<p:inputText value="#{produtoBean.produto.valor}" />
+					</div>
+					<div class="col-md-2">
+						<font color="red"> <p:outputLabel value="Quantidade" />
+						</font>
+						<p:inputText value="#{produtoBean.produto.quantidade}" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<br/>
+						<p:commandButton ajax="false" icon="ui-icon-check"
+							value="Cadastrar"
+							actionListener="#{produtoBean.cadastroProduto()}" />
+							<p/>	
+					</div>
+				</div>
+			</p:panel>
+
+			<br />
+			<div class="row">
+				<div class="col-xs-offset-10 col-xs-1" >		
+					
+				</div>
+			</div>	
+		
+					
+							
+		   <br />				
+	
+			<p:dataTable id="dtProduto" var="Produto" value="#{produtoBean.listaProdutos}" filteredValue="#{produtoBean.listaFiltroProduto}"
+				  rows="20" widgetVar="produtoTabela" paginator="true" > 
+				
+				  <f:facet name="header">	
+				  
+		            <p:outputPanel style="text-align:right">
+		                <h:outputText value="Digite aqui: " />
+		                <p:inputText id="globalFilter" value="#{produtoBean.produto.nome}" style="width:150px" placeholder="Nome do Produto"/>
+		                <p:commandButton  ajax="false" value="Pesquisar" update="dtProduto" icon="ui-icon-search"
+											actionListener="#{produtoBean.pesquisaProduto()}" />
+		            </p:outputPanel>
+		            
+       			 </f:facet>
+				
+				<p:column headerText="Produto"  >
+					<h:outputText value="#{Produto.nome}" />
+				</p:column>
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{Produto.quantidade}" />
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="#{Produto.valor}" />
+				</p:column>
+				<p:column headerText="Alterar" style="text-align: center" >
+				 <p:commandButton 
+				 icon="ui-icon-gear" update=":formProduto:painelProduto" 
+				 actionListener="#{produtoBean.alterarProduto(Produto)}"/>
+				 <p:commandButton
+				 icon="ui-icon-close" update=":formProduto:dtProduto" 
+				 actionListener="#{produtoBean.removerProduto(Produto)}"
+				 ></p:commandButton>
+				
+				
+				</p:column>
+
+			</p:dataTable>
+
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

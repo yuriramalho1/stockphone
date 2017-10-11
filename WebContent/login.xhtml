@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			
+		<div>
+		
+			<div class="col-xs-offset-4 col-xs-8">
+				<div >
+					<p:outputLabel value="Login" />
+					<p:inputText value="#{usuariosBean.usuario.login}"/>
+					<p></p>
+				</div>
+			</div>
+			
+			<div class="col-xs-offset-4 col-xs-8">
+				<div >
+					<p:outputLabel value="Senha" />
+					<p:inputText value="#{usuariosBean.usuario.senha}"/>
+							<div class="row">
+						<div class="col-xs-offset-1 col-xs-11	" >		
+					<p:commandButton ajax="false" value="Entrar" 
+					actionListener="#{usuariosBean.cadastrarUsuario()}"   />
+						</div>
+					</div>	
+				
+				</div>
+		</div>
+						
+		</div>
+		
+	
+						
+	
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

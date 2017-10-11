@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/layout/template.xhtml">
+	<ui:define name="body">
+
+		<h:form id="formCliente">
+		
+		<p:toolbar>
+		
+		 <f:facet name="right">
+            <p:menuButton value="Opções">
+                <p:menuitem value="Produto" url="http://localhost:8080/stockphone/pages/produto.jsf" 
+                icon="ui-icon-carat-1-e"  />
+                <p:menuitem value="Fornecedor" url="http://localhost:8080/stockphone/pages/fornecedor.jsf" 
+                icon="ui-icon-carat-1-e"/>
+                <p:menuitem value="Cliente" url="http://localhost:8080/stockphone/pages/cliente.jsf"
+                icon="ui-icon-carat-1-e" />
+                <p:menuitem value="Sair" url="http://localhost:8080/stockphone/login.jsf"
+                icon="ui-icon-extlink" />
+            </p:menuButton>
+        </f:facet>
+        
+		</p:toolbar>
+		
+			<p:growl id="messages" showDetail="true" />
+			
+		<p:panel header="Cadastro de Cliente">
+			<div class="row">
+				<div class="col-md-6">
+					<p:outputLabel value="Nome" />
+					<p:inputText value="#{clienteBean.cliente.nome}"/>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+					<p:outputLabel value="Cpf/CNPJ" />
+					<p:inputText value="#{clienteBean.cliente.cpfCnpj}"/>
+				</div>
+				<div class="col-md-2">
+				<font color="red">	<p:outputLabel  value="Telefone" /> </font>
+					<p:inputText value="#{clienteBean.cliente.telefone}"  />
+				</div>
+			</div>
+				<div class="row">
+				<div class="col-md-4">
+					<p:outputLabel value="Email" />
+					<p:inputText value="#{clienteBean.cliente.email}"/>
+				</div>
+			</div>
+			<div class="row">	
+    					<div class="col-xs-offset-4 col-xs-8">
+							<p:commandButton  value="Cadastrar"/>
+						</div>
+					</div>		
+			
+		</p:panel>		
+		<p:panel>
+		</p:panel>
+				
+			<p:dataTable id="dtCliente" var="Cliente" value="#{clienteBean.listaClientes}" filteredValue="#{clienteBean.listaClientes}"
+				  rows="20" widgetVar="clienteTabela" paginator="true" > 
+			
+				  <f:facet name="header">	
+		           
+		            <p:outputPanel style="text-align:right">
+		                <h:outputText value="Digite aqui: " />
+		                <p:inputText id="globalFilter" value="#{clienteBean.cliente.nome}" style="width:150px" placeholder="Nome do Cliente"/>
+		                <p:commandButton  ajax="false" value="Pesquisar" update="dtCliente" icon="ui-icon-search"
+											actionListener="#{clienteBean.pesquisaCliente()}" />
+		            </p:outputPanel>
+		            
+       			 </f:facet>
+			
+				<p:column headerText="Cliente">
+					<h:outputText value="#{Cliente.nome}" />
+				</p:column>
+				<p:column headerText="E-mail">
+					<h:outputText value="#{Cliente.email}" />
+				</p:column>
+				<p:column headerText="Cpf/Cnpj">
+					<h:outputText value="#{Cliente.cpfCnpj}" />
+				</p:column>
+				<p:column headerText="Telefone">
+					<h:outputText value="#{Cliente.telefone}" />
+				</p:column>
+				<p:column headerText="Alterar" style="text-align: center" >
+				 <p:commandButton 
+				 icon="ui-icon-disk" update=":formFornecedor:painelFornecedor" 
+				 actionListener="#{fornecedorBean.alterarFornecedor(Fornecedor)}"/>
+				 <p:commandButton
+				 icon="ui-icon-close" update=":formProduto:dtFornecedor" 
+				 actionListener="#{fornecedorBean.removerFornecedor(Fornecedor)}"
+				 />
+			
+			
+				</p:column>
+			</p:dataTable>
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>
