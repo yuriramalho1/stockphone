@@ -93,6 +93,7 @@ public class ProdutoBean implements Serializable {
 	}
 
 	public void pesquisaProduto() {
+		
 		this.listaProdutos = produtoBO.getConsultaProduto(this.produto);
 		if (listaProdutos == null || listaProdutos.isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(
@@ -103,14 +104,13 @@ public class ProdutoBean implements Serializable {
 			}
 
 	public void alterarProduto(Produto produto){
-		this.produto = produto;
-		
+		setProduto(produto);
 	}
 	
 	public void removerProduto(Produto produto) throws Exception{
 		this.produto = produto;
 		produto.setAtivo(false);
-		produtoBO.salvar(produto);
+		produtoBO.salvar(this.produto);
 		
 	}
 	

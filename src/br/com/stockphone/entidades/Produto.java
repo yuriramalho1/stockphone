@@ -40,7 +40,7 @@ public class Produto implements Serializable{
 
 	
 	@Column
-	private boolean ativo;
+	private Boolean ativo;
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -78,11 +78,13 @@ public class Produto implements Serializable{
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-		
+	public Boolean getAtivo() {
+		return ativo;
 	}
-
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+	
 	
 	
 	

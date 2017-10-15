@@ -10,54 +10,31 @@
 
 		<h:form id="formProduto">
 			
-		<p:toolbar>
-      
- 
-        <f:facet name="right">
-            <p:menuButton value="Opções">
-                <p:menuitem value="Produto" url="http://localhost:8080/stockphone/pages/produto.jsf" 
-                icon="ui-icon-carat-1-e"  />
-                <p:menuitem value="Fornecedor" url="http://localhost:8080/stockphone/pages/fornecedor.jsf" 
-                icon="ui-icon-carat-1-e"/>
-                <p:menuitem value="Cliente" url="http://localhost:8080/stockphone/pages/cliente.jsf"
-                icon="ui-icon-carat-1-e" />
-                <p:menuitem value="Sair" url="http://localhost:8080/stockphone/login.jsf"
-                icon="ui-icon-extlink" />
-            </p:menuButton>
-        </f:facet>
- 
-    </p:toolbar>
-			
-			<br/>
-			
-			<p:panel class="row" id="painelProduto" header="Cadastro de Produto">
+			<p:panel  id="painelProduto" header="Cadastro de Produto">
 							<p:growl id="messages" showDetail="true" />
-				
 				
 				<div class="row">
 					<div class="col-md-6">
-						<p:outputLabel value="Nome" />
-						<p:inputText value="#{produtoBean.produto.nome}" />
-						<p/>
+						<p:outputLabel for="nome" value="Nome" />
+						<p:inputText id="nome" required="true" value="#{produtoBean.produto.nome}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4">
-						<br/>
-						<p:outputLabel value="Valor" />
-						<p:inputText value="#{produtoBean.produto.valor}" />
+						<p:outputLabel for="valor" value="Valor" />
+						<p:inputText id="valor" required="true" value="#{produtoBean.produto.valor}" />
 					</div>
 					<div class="col-md-2">
-						<font color="red"> <p:outputLabel value="Quantidade" />
+						<font color="red"> <p:outputLabel for="quantidade"  value="Quantidade" />
 						</font>
-						<p:inputText value="#{produtoBean.produto.quantidade}" />
+						<p:inputText id="quantidade" required="true" value="#{produtoBean.produto.quantidade}" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-2">
 						<br/>
 						<p:commandButton ajax="false" icon="ui-icon-check"
-							value="Cadastrar"
+							value="Cadastrar" update=":dtProduto"
 							actionListener="#{produtoBean.cadastroProduto()}" />
 							<p/>	
 					</div>
@@ -65,17 +42,13 @@
 			</p:panel>
 
 			<br />
-			<div class="row">
-				<div class="col-xs-offset-10 col-xs-1" >		
-					
-				</div>
-			</div>	
 		
 					
 							
-		   <br />				
-	
-			<p:dataTable id="dtProduto" var="Produto" value="#{produtoBean.listaProdutos}" filteredValue="#{produtoBean.listaFiltroProduto}"
+		   <br />
+	</h:form>	   				
+	<h:form id="formConsulta">
+			<p:dataTable id="dtProduto" var="produto" value="#{produtoBean.listaProdutos}" filteredValue="#{produtoBean.listaFiltroProduto}"
 				  rows="20" widgetVar="produtoTabela" paginator="true" > 
 				
 				  <f:facet name="header">	
@@ -90,31 +63,31 @@
        			 </f:facet>
 				
 				<p:column headerText="Produto"  >
-					<h:outputText value="#{Produto.nome}" />
+					<h:outputText value="#{produto.nome}" />
 				</p:column>
 				<p:column headerText="Quantidade">
-					<h:outputText value="#{Produto.quantidade}" />
+					<h:outputText value="#{produto.quantidade}" />
 				</p:column>
 				<p:column headerText="Valor">
-					<h:outputText value="#{Produto.valor}" />
+					<h:outputText value="#{produto.valor}" />
 				</p:column>
 				<p:column headerText="Alterar" style="text-align: center" >
-				 <p:commandButton 
-				 icon="ui-icon-gear" update=":formProduto:painelProduto" 
-				 actionListener="#{produtoBean.alterarProduto(Produto)}"/>
+				 	<p:commandButton icon="ui-icon-gear" process="@this" ajax="true"
+				 	actionListener="#{produtoBean.alterarProduto(produto)}" update=":formProduto:painelProduto"  />
+				</p:column> 
+				
+				<p:column headerText="Excluir" style="text-align: center" >
 				 <p:commandButton
-				 icon="ui-icon-close" update=":formProduto:dtProduto" 
-				 actionListener="#{produtoBean.removerProduto(Produto)}"
+				 icon="ui-icon-close" update=":formConsulta:dtProduto" 
+				 actionListener="#{produtoBean.removerProduto(produto)}"
 				 ></p:commandButton>
-				
-				
 				</p:column>
 
 			</p:dataTable>
+	</h:form>
 
 
-
-		</h:form>
+		
 
 	</ui:define>
 </ui:composition>

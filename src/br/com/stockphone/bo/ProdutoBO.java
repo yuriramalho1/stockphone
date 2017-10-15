@@ -43,18 +43,18 @@ public class ProdutoBO extends GenericHibernateDAO<Produto> implements Serializa
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		StringBuilder query = new StringBuilder("SELECT p FROM Produto p WHERE 1=1");
 		
-		if(produto.getNome() != null && !produto.getNome().equals(null)){
+		if(produto.getNome() != null && !produto.getNome().equals("")){
 			query.append(" AND p.nome =:nome");
 			parametros.put("nome", produto.getNome());
 		}
 		
-		if(produto.getQuantidade() != null && !produto.getQuantidade().equals(null)){
-			query.append(" AND p.quantidade =: quantidade");
+		if(produto.getQuantidade() != null){
+			query.append(" AND p.quantidade =:quantidade");
 			parametros.put("quantidade", produto.getQuantidade());
 		}
 		
-		if(produto.getValor() != null && !produto.getValor().equals(null)){
-			query.append(" AND p.valor =: valor");
+		if(produto.getValor() != null){
+			query.append(" AND p.valor =:valor");
 			parametros.put("valor", produto.getQuantidade());
 		}
 		query.append(" AND p.ativo =:ativo");
