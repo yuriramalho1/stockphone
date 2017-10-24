@@ -38,7 +38,7 @@ public class LoginFilter implements Filter{
 				else
 					chain.doFilter(request, response);
 			} else
-				res.sendRedirect("/farmacia/login.jsf");
+				res.sendRedirect("/stockphone/login.jsf");
 		}else{
 			res.sendRedirect(NavigationUtil.TO_HOME);
 		}

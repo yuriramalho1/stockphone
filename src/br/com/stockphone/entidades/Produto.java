@@ -31,6 +31,9 @@ public class Produto implements Serializable{
 	@Column(name="quantidade")
 	private Long quantidade;
 	
+	@Column(name="quantidadeNova")
+	private Long quantidadeNova;
+	
 	public Long getQuantidade() {
 		return quantidade;
 	}
@@ -83,6 +86,12 @@ public class Produto implements Serializable{
 	}
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+	public Long getQuantidadeNova() {
+		return quantidadeNova;
+	}
+	public void setQuantidadeNova(Long quantidadeNova) {
+		this.quantidadeNova = quantidadeNova;
 	}
 	
 	

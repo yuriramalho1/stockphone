@@ -1,5 +1,6 @@
 package br.com.stockphone.managedBeans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.omnifaces.cdi.ViewScoped;
 
@@ -78,25 +81,19 @@ public class UsuariosBean implements Serializable {
 		}	
 	}
 
-	private void verificaLogin(Usuario usuario) {
+	
+	@SuppressWarnings("unused")
+	private void verificaLogin(Usuario usuario, ServletResponse response) throws IOException {
 		this.listaUsuarios = usuarioBO.getConsultaUsuario(this.usuario);
-		if (usuario.getLogin() == null || usuario.getLogin().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Usuário incorreto.", ""));
+		HttpServletResponse res = (HttpServletResponse) response;
+		if (usuario.getLogin().equals("Seu login") || usuario.getSenha().equals("Sua senha")) {
+			
+			res.sendRedirect("pages/produto.jsf");;
+			
 		}
 	}
 	
-	private void verificaSenha(Usuario usuario) {
-		this.listaUsuarios = usuarioBO.getConsultaUsuario(this.usuario);
-		if (usuario.getSenha() == null || usuario.getLogin().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Senha incorreta.", ""));
-		}
-	}
+
 	
 	
 	public Usuario getUsuario() {

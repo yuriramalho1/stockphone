@@ -26,4 +26,6 @@ public class MovimentacaoBO extends GenericHibernateDAO<Movimentacao> implements
 			return movimentacao;
 	}
 	
+	
+	
 }

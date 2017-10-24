@@ -10,7 +10,8 @@
 
 		<h:form id="formProduto">
 			
-			<p:panel  id="painelProduto" header="Cadastro de Produto">
+			<p:panel  id="painelProduto" header="Produto">
+				<!--
 							<p:growl id="messages" showDetail="true" />
 				
 				<div class="row">
@@ -32,13 +33,24 @@
 				</div>
 				<div class="row">
 					<div class="col-md-2">
+					  -->
 						<br/>
+						 <f:facet name="header">	
+		            <p:outputPanel style="text-align:center">
+		                <h:outputText value="Digite aqui: " />
+		                <p:inputText id="globalFilter" value="#{produtoBean.produto.nome}" style="width:330px"/>
+		                <p:commandButton  ajax="false" value="Pesquisar" update="dtProduto" icon="ui-icon-search"
+											actionListener="#{produtoBean.pesquisaProduto()}" />
+		            </p:outputPanel>
+       			 </f:facet>
+						
+						<!--
 						<p:commandButton ajax="false" icon="ui-icon-check"
 							value="Cadastrar" update=":dtProduto"
 							actionListener="#{produtoBean.cadastroProduto()}" />
 							<p/>	
-					</div>
-				</div>
+							-->>
+					
 			</p:panel>
 
 			<br />
@@ -49,18 +61,12 @@
 	</h:form>	   				
 	<h:form id="formConsulta">
 			<p:dataTable id="dtProduto" var="produto" value="#{produtoBean.listaProdutos}" filteredValue="#{produtoBean.listaFiltroProduto}"
-				  rows="20" widgetVar="produtoTabela" paginator="true" > 
+				 widgetVar="produtoTabela" paginator="true" scrollable="true" scrollRows="20" selectionMode="single" scrollHeight="150"   rowKey="#{produto.id}" rowIndexVar="rowIndex"> 
 				
-				  <f:facet name="header">	
-				  
-		            <p:outputPanel style="text-align:right">
-		                <h:outputText value="Digite aqui: " />
-		                <p:inputText id="globalFilter" value="#{produtoBean.produto.nome}" style="width:150px" placeholder="Nome do Produto"/>
-		                <p:commandButton  ajax="false" value="Pesquisar" update="dtProduto" icon="ui-icon-search"
-											actionListener="#{produtoBean.pesquisaProduto()}" />
-		            </p:outputPanel>
-		            
-       			 </f:facet>
+				 
+			
+				<p:ajax event="rowSelect"    onstart="PF('dlg1').show()"/>
+			
 				
 				<p:column headerText="Produto"  >
 					<h:outputText value="#{produto.nome}" />
@@ -71,21 +77,34 @@
 				<p:column headerText="Valor">
 					<h:outputText value="#{produto.valor}" />
 				</p:column>
-				<p:column headerText="Alterar" style="text-align: center" >
-				 	<p:commandButton icon="ui-icon-gear" process="@this" ajax="true"
-				 	actionListener="#{produtoBean.alterarProduto(produto)}" update=":formProduto:painelProduto"  />
-				</p:column> 
+				
 				
 				<p:column headerText="Excluir" style="text-align: center" >
 				 <p:commandButton
 				 icon="ui-icon-close" update=":formConsulta:dtProduto" 
-				 actionListener="#{produtoBean.removerProduto(produto)}"
+				 actionListener="#{produtoBean.removerProduto(produto)}" 
 				 ></p:commandButton>
 				</p:column>
 
 			</p:dataTable>
+			
 	</h:form>
-
+	
+		<p:dialog  id="dlgProduto" value="#{produtoBean.listaProdutos}" var="produto" widgetVar="dlg1"  modal="true" height="120">
+    		
+    				<p:panel id="panelDlgProduto">
+    		
+    				<p:inputText id="quantidadeNova" required="true" value="#{produto.quantidadeNova}" />
+					<h:form>
+						<input style="margin-left:40px" type="radio" name="opcao" value="#{produtoBean.entradaProduto(produto)}"/> Entrada
+								<input type="radio" name="opcao" value="#{produtoBean.saidaProduto(produto)}"/> Saída
+					</h:form>
+    				<p:commandButton value="Salvar" icon="ui-icon-check" update=":formConsulta:dtProduto"
+    				actionListener="#{produtoBean.entradaProduto(produto)}"  style="margin-left:50px"/>
+    				</p:panel>
+			</p:dialog>
+			
+			
 
 		
 

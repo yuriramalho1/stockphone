@@ -3,8 +3,8 @@ package br.com.stockphone.enumeration;
 public enum TipoMovimentacao {
 	
 	ENTRADA("Entrada"),
-	SAIDA("Saída");
-
+	SAIDA("Saída"),
+	BAIXA("Baixa");
 	
 	private String descricao;
 	

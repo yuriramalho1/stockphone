@@ -139,7 +139,7 @@ public abstract class GenericHibernateDAO<T> implements IGenericDAO<T>{
 		return entity;
 	}
 	
-	public void delete(T entity, int id){
+	public void delete(T entity, Long id){
 		try {
 			em.getTransaction().begin();
 			entity = (T) em.find(entity.getClass(), id);

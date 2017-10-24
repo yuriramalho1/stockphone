@@ -30,6 +30,9 @@ public class Movimentacao implements Serializable{
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seqMovimentacao")
 	private Long id;
 	
+	@Column
+	private String observacao;
+	
 	@Column(name="TIPO_MOVIMENTACAO", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoMovimentacao tipoMovimentacao;
@@ -52,6 +55,19 @@ public class Movimentacao implements Serializable{
 		return result;
 	}
 	
+	@Column
+	private boolean ativo;
+	
+	
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +81,14 @@ public class Movimentacao implements Serializable{
 
 	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
 		this.tipoMovimentacao = tipoMovimentacao;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 	
 	

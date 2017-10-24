@@ -31,6 +31,17 @@ public class ProdutoBean implements Serializable {
 
 	private List<Produto> listaProdutos;
 	private List<Produto> listaFiltroProduto;
+	private Produto quantidadeNova;
+	
+
+
+	public Produto getQuantidadeNova() {
+		return quantidadeNova;
+	}
+
+	public void setQuantidadeNova(Produto quantidadeNova) {
+		this.quantidadeNova = quantidadeNova;
+	}
 
 	public ProdutoBean() {
 		// TODO Auto-generated constructor stub
@@ -108,10 +119,21 @@ public class ProdutoBean implements Serializable {
 	}
 	
 	public void removerProduto(Produto produto) throws Exception{
-		this.produto = produto;
-		produto.setAtivo(false);
-		produtoBO.salvar(this.produto);
+		produtoBO.delete(produto, produto.getId());
+		pesquisaProduto();
 		
+	}
+	
+	public void entradaProduto(Produto produto) throws Exception {
+		long produtoNovo = produto.getQuantidadeNova() + produto.getQuantidade();
+		produto.setQuantidade(produtoNovo);
+		produtoBO.salvar(produto);
+	}
+	
+	public void saidaProduto(Produto produto) throws Exception {
+		long produtoNovo = produto.getQuantidadeNova() - produto.getQuantidade();
+		produto.setQuantidade(produtoNovo);
+		produtoBO.salvar(produto);
 	}
 	
 	public Produto getProduto() {
