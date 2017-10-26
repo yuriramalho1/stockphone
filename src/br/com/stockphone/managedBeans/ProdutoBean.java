@@ -2,7 +2,6 @@ package br.com.stockphone.managedBeans;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -124,17 +123,6 @@ public class ProdutoBean implements Serializable {
 		
 	}
 	
-	public void entradaProduto(Produto produto) throws Exception {
-		long produtoNovo = produto.getQuantidadeNova() + produto.getQuantidade();
-		produto.setQuantidade(produtoNovo);
-		produtoBO.salvar(produto);
-	}
-	
-	public void saidaProduto(Produto produto) throws Exception {
-		long produtoNovo = produto.getQuantidadeNova() - produto.getQuantidade();
-		produto.setQuantidade(produtoNovo);
-		produtoBO.salvar(produto);
-	}
 	
 	public Produto getProduto() {
 		return produto;

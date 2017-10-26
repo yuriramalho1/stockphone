@@ -11,46 +11,20 @@
 		<h:form id="formProduto">
 			
 			<p:panel  id="painelProduto" header="Produto">
-				<!--
-							<p:growl id="messages" showDetail="true" />
-				
-				<div class="row">
-					<div class="col-md-6">
-						<p:outputLabel for="nome" value="Nome" />
-						<p:inputText id="nome" required="true" value="#{produtoBean.produto.nome}" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<p:outputLabel for="valor" value="Valor" />
-						<p:inputText id="valor" required="true" value="#{produtoBean.produto.valor}" />
-					</div>
-					<div class="col-md-2">
-						<font color="red"> <p:outputLabel for="quantidade"  value="Quantidade" />
-						</font>
-						<p:inputText id="quantidade" required="true" value="#{produtoBean.produto.quantidade}" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2">
-					  -->
-						<br/>
-						 <f:facet name="header">	
-		            <p:outputPanel style="text-align:center">
+
+				 <p:growl id="message" showDetail="true" />
+				 
+				  <p:commandButton  style="margin-left:600px; float:right" value="Novo" 
+	   					  actionListener="#{dialogView.destroyWorld}" pdate="message" onclick="PF('dlg2').show()"/>
+	      					 
+			
 		                <h:outputText value="Digite aqui: " />
 		                <p:inputText id="globalFilter" value="#{produtoBean.produto.nome}" style="width:330px"/>
-		                <p:commandButton  ajax="false" value="Pesquisar" update="dtProduto" icon="ui-icon-search"
+		                <p:commandButton  ajax="false" value="Pesquisar" update=":formConsulta:dtProduto" icon="ui-icon-search"
 											actionListener="#{produtoBean.pesquisaProduto()}" />
-		            </p:outputPanel>
-       			 </f:facet>
-						
-						<!--
-						<p:commandButton ajax="false" icon="ui-icon-check"
-							value="Cadastrar" update=":dtProduto"
-							actionListener="#{produtoBean.cadastroProduto()}" />
-							<p/>	
-							-->>
-					
+	   				
+	   					
+	 											
 			</p:panel>
 
 			<br />
@@ -96,14 +70,28 @@
     		
     				<p:inputText id="quantidadeNova" required="true" value="#{produto.quantidadeNova}" />
 					<h:form>
-						<input style="margin-left:40px" type="radio" name="opcao" value="#{produtoBean.entradaProduto(produto)}"/> Entrada
-								<input type="radio" name="opcao" value="#{produtoBean.saidaProduto(produto)}"/> Saída
-					</h:form>
+						<input style="margin-left:40px" type="radio" name="opcao" /> Entrada
+								<input type="radio" name="opcao" /> Saída
+					
     				<p:commandButton value="Salvar" icon="ui-icon-check" update=":formConsulta:dtProduto"
-    				actionListener="#{produtoBean.entradaProduto(produto)}"  style="margin-left:50px"/>
+    				  style="margin-left:50px"/>
+    			</h:form>	  
     				</p:panel>
 			</p:dialog>
 			
+			<p:dialog  global="true" showEffect="fade" hideEffect="fade" widgetVar="dlg2">
+	    			<h:form id="dlgCadastro" >
+	    					Nome
+	    			<p:inputText id="nome" required="true" value="#{produtoBean.produto.nome}" />	
+	    					Valor	
+	 				<p:inputText id="valor" required="true" value="#{produtoBean.produto.valor}" />
+	 					Quantidade
+	 				<p:inputText id="quantidade" required="true" value="#{produtoBean.produto.quantidade}" />
+	       						
+	       			<p:commandButton value="Cadastrar" 
+	       						actionListener="#{produtoBean.cadastroProduto()}" update=":formConsulta:dtProduto" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	  						 </h:form>
+	  						  </p:dialog>
 			
 
 		

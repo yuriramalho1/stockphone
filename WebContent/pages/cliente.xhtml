@@ -1,90 +1,105 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/layout/template.xhtml">
 	<ui:define name="body">
 
 		<h:form id="formCliente">
-		
-		
-			<p:growl id="messages" showDetail="true" />
 			
-		<p:panel header="Cadastro de Cliente">
-			<div class="row">
-				<div class="col-md-6">
-					<p:outputLabel value="Nome" />
-					<p:inputText value="#{clienteBean.cliente.nome}"/>
-				</div>
-			</div>
+			<p:panel  id="painelCliente" header="Cliente">
+
+				 <p:growl id="message" showDetail="true" />
+				 
+				  <p:commandButton  style="margin-left:600px; float:right" value="Novo" 
+	   					  actionListener="#{dialogView.destroyWorld}" pdate="message" onclick="PF('dlg2').show()"/>
+	      					 
 			
-			<div class="row">
-				<div class="col-md-4">
-					<p:outputLabel value="Cpf/CNPJ" />
-					<p:inputText value="#{clienteBean.cliente.cpfCnpj}"/>
-				</div>
-				<div class="col-md-2">
-				<font color="red">	<p:outputLabel  value="Telefone" /> </font>
-					<p:inputText value="#{clienteBean.cliente.telefone}"  />
-				</div>
-			</div>
-				<div class="row">
-				<div class="col-md-4">
-					<p:outputLabel value="Email" />
-					<p:inputText value="#{clienteBean.cliente.email}"/>
-				</div>
-			</div>
-			<div class="row">	
-    					<div class="col-md-2">
-							<p:commandButton  value="Cadastrar"/>
-						</div>
-					</div>		
-			
-		</p:panel>		
-		<p:panel>
-		</p:panel>
-				
-			<p:dataTable id="dtCliente" var="Cliente" value="#{clienteBean.listaClientes}" filteredValue="#{clienteBean.listaClientes}"
-				  rows="20" widgetVar="clienteTabela" paginator="true" > 
-			
-				  <f:facet name="header">	
-		           
-		            <p:outputPanel style="text-align:right">
 		                <h:outputText value="Digite aqui: " />
-		                <p:inputText id="globalFilter" value="#{clienteBean.cliente.nome}" style="width:150px" placeholder="Nome do Cliente"/>
-		                <p:commandButton  ajax="false" value="Pesquisar" update="dtCliente" icon="ui-icon-search"
+		                <p:inputText id="globalFilter" value="#{clienteBean.cliente.nome}" style="width:330px"/>
+		                <p:commandButton  ajax="false" value="Pesquisar" update=":formConsulta:dtCliente" icon="ui-icon-search"
 											actionListener="#{clienteBean.pesquisaCliente()}" />
-		            </p:outputPanel>
-		            
-       			 </f:facet>
+	   				
+	   					
+	 											
+			</p:panel>
+
+			<br />
+		
+					
+							
+		   <br />
+	</h:form>	   				
+	<h:form id="formConsulta">
+			<p:dataTable id="dtCliente" var="cliente" value="#{clienteBean.listaClientes}" filteredValue="#{clienteBean.listaFiltroCliente}"
+				 widgetVar="clienteTabela" paginator="true" scrollable="true" scrollRows="20" selectionMode="single" scrollHeight="150"   rowKey="#{produto.id}" rowIndexVar="rowIndex"> 
+				
+				 
 			
-				<p:column headerText="Cliente">
-					<h:outputText value="#{Cliente.nome}" />
-				</p:column>
-				<p:column headerText="E-mail">
-					<h:outputText value="#{Cliente.email}" />
+				<p:ajax event="rowSelect"    onstart="PF('dlg1').show()"/>
+			
+				
+				<p:column headerText="Nome"  >
+					<h:outputText value="#{cliente.nome}" />
 				</p:column>
 				<p:column headerText="Cpf/Cnpj">
-					<h:outputText value="#{Cliente.cpfCnpj}" />
+					<h:outputText value="#{clien}" />
+				</p:column>
+				<p:column headerText="Email">
+					<h:outputText value="#{produto.valor}" />
 				</p:column>
 				<p:column headerText="Telefone">
-					<h:outputText value="#{Cliente.telefone}" />
+					<h:outputText value="#{produto.valor}" />
 				</p:column>
-				<p:column headerText="Alterar" style="text-align: center" >
-				 <p:commandButton 
-				 icon="ui-icon-disk" update=":formFornecedor:painelCliente" 
-				 actionListener="#{fornecedorBean.alterarCliente(Cliente)}"/>
+				
+				
+				<p:column headerText="Excluir" style="text-align: center" >
 				 <p:commandButton
-				 icon="ui-icon-close" update=":formCliente:dtCliente" 
-				 actionListener="#{fornecedorBean.removerCliente(Cliente)}"
-				 />
-			
-			
+				 icon="ui-icon-close" update=":formConsulta:dtCliente" 
+				 actionListener="#{clienteBean.removerCliente(cliente)}" 
+				 ></p:commandButton>
 				</p:column>
+
 			</p:dataTable>
+			
+	</h:form>
+	
+<!-- 		<p:dialog  id="dlgProduto" value="#{produtoBean.listaProdutos}" var="produto" widgetVar="dlg1"  modal="true" height="120"> -->
+    		
+<!--     				<p:panel id="panelDlgProduto"> -->
+    		
+<!--     				<p:inputText id="quantidadeNova" required="true" value="#{produto.quantidadeNova}" /> -->
+<!-- 					<h:form> -->
+<!-- 						<input style="margin-left:40px" type="radio" name="opcao" /> Entrada -->
+<!-- 								<input type="radio" name="opcao" /> Saída -->
+					
+<!--     				<p:commandButton value="Salvar" icon="ui-icon-check" update=":formConsulta:dtCliente" -->
+<!--     				  style="margin-left:50px"/> -->
+<!--     			</h:form>	   -->
+<!--     				</p:panel> -->
+<!-- 			</p:dialog> -->
+			
+			<p:dialog  global="true" showEffect="fade" hideEffect="fade" widgetVar="dlg2">
+	    			<h:form id="dlgCliente" >
+	    					Nome
+	    			<p:inputText id="nome" required="true" value="#{clienteBean.cliente.nome}" />	
+	    					CPF/CNPJ	
+	 				<p:inputText id="cpf" required="true" value="#{clienteBean.cliente.cpfCnpj}" />
+	 						Email
+	 				<p:inputText id="email" required="true" value="#{clienteBean.cliente.email}" />
+	       					Telefone
+	 				<p:inputText id="telefone" required="true" value="#{clienteBean.cliente.telefone}" />
+	       						
+	       			<p:commandButton value="Cadastrar" 
+	       						actionListener="#{clienteBean.cadastroCliente()}" update=":formConsulta:dtCliente" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	  						 </h:form>
+	  						  </p:dialog>
+			
 
-
-		</h:form>
+		
 
 	</ui:define>
 </ui:composition>

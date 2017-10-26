@@ -27,6 +27,8 @@ public class FornecedorBean implements Serializable {
 	private FornecedorBO fornecedorBO;
 
 	private Fornecedor fornecedor;
+	private List<Fornecedor> listaFiltroFornecedor;
+	
 
 	private List<Fornecedor> listaFornecedor;
 
@@ -85,13 +87,12 @@ public class FornecedorBean implements Serializable {
 	}
 	
 	public void alterarFornecedor(Fornecedor fornecedor){
-		this.fornecedor = fornecedor;
+		setFornecedor(fornecedor);
 	}
 	
 	public void removerFornecedor(Fornecedor fornecedor) throws Exception{
-		this.fornecedor = fornecedor;
-		fornecedor.setAtivo(false);
-		fornecedorBO.salvar(fornecedor);
+		fornecedorBO.delete(fornecedor, fornecedor.getId());
+		pesquisaFornecedor();
 	}
 	
 
@@ -118,5 +119,12 @@ public class FornecedorBean implements Serializable {
 	public void setListaFornecedor(List<Fornecedor> listaFornecedor) {
 		this.listaFornecedor = listaFornecedor;
 	}
+	
+	public List<Fornecedor> getListaFiltroFornecedor() {
+		return listaFiltroFornecedor;
+	}
 
+	public void setListaFiltroFornecedor(List<Fornecedor> listaFiltroFornecedor) {
+		this.listaFiltroFornecedor = listaFiltroFornecedor;
+	}
 }

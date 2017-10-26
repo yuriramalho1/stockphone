@@ -1,80 +1,86 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/layout/template.xhtml">
 	<ui:define name="body">
-		<h:form id="formFornecedor">
-		
-			
 
-		<br/>
-		
-		<p:panel id="painelFornecedor" header="Cadastro de Fornecedor">
-			<p:growl id="messages" showDetail="true" />
+		<h:form id="formFornecedor">
 			
-			<div class="row">
-				<div class="col-md-6">	
-					<p:outputLabel for="nome" value="Nome"/>
-					<p:inputText  id="nome" value="#{fornecedorBean.fornecedor.nome}"/>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">	
-					<p:outputLabel for="telefone" value="Telefone"/>
-					<p:inputText  id="telefone" value="#{fornecedorBean.fornecedor.telefone}"/>
-				</div>
-				<div class="col-md-4">	
-					<p:outputLabel for="email" value="E-mail"/>
-					<p:inputText  id="email" value="#{fornecedorBean.fornecedor.email}"/>
-				</div>
-			</div>
+			<p:panel  id="painelFornecedor" header="Fornecedor">
+
+				 <p:growl id="message" showDetail="true" />
+				 
+				  <p:commandButton  style="margin-left:600px; float:right" value="Novo" 
+	   					  actionListener="#{dialogView.destroyWorld}" pdate="message" onclick="PF('dlg2').show()"/>
+	      					 
 			
-			<div class="row">
-				<div class="col-md-2">		
-					<p:commandButton ajax="false" icon="ui-icon-check" value="Cadastrar" 
-					actionListener="#{fornecedorBean.cadastroFornecedor()}"   />
-					
-				</div>
-		</div>
-			
-		</p:panel>			
-		<br />
-					
-			<p:dataTable id="dtFornecedor" var="Fornecedor" value="#{fornecedorBean.listaFornecedor}" filteredValue="#{fornecedorBean.listaFornecedor}"
-				  rows="20" widgetVar="fornecedorTabela" paginator="true" > 
-			
-				  <f:facet name="header">	
-		           
-		            <p:outputPanel style="text-align:right">
 		                <h:outputText value="Digite aqui: " />
-		                <p:inputText id="globalFilter" value="#{fornecedorBean.fornecedor.nome}" style="width:150px" placeholder="Nome do Fornecedor"/>
-		                <p:commandButton  ajax="false" value="Pesquisar" update="dtFornecedor" icon="ui-icon-search"
+		                <p:inputText id="globalFilter" value="#{fornecedorBean.fornecedor.nome}" style="width:330px"/>
+		                <p:commandButton  ajax="false" value="Pesquisar" update=":formConsulta:dtFornecedor" icon="ui-icon-search"
 											actionListener="#{fornecedorBean.pesquisaFornecedor()}" />
-		            </p:outputPanel>
-		            
-       			 </f:facet>
+	   				
+	   					
+	 											
+			</p:panel>
+
+			<br />
+		
+					
+							
+		   <br />
+	</h:form>	   				
+	<h:form id="formConsulta">
+			<p:dataTable id="dtFornecedor" var="fornecedor" value="#{fornecedorBean.listaFornecedor}" filteredValue="#{fornecedorBean.listaFiltroFornecedor}"
+				 widgetVar="fornecedorTabela" paginator="true" scrollable="true" scrollRows="20" selectionMode="single" scrollHeight="150"   rowKey="#{fornecedor.id}" rowIndexVar="rowIndex"> 
+				
+				 
 			
-				<p:column headerText="Fornecedor">
+				<p:ajax event="rowSelect"    onstart="PF('dlg1').show()"/>
+			
+				
+				<p:column headerText="Nome"  >
 					<h:outputText value="#{fornecedor.nome}" />
 				</p:column>
-				<p:column headerText="E-mail">
-					<h:outputText value="#{fornecedor.email}" />
+				<p:column headerText="Telefone">
+					<h:outputText value="#{produto.telefone}" />
 				</p:column>
-				<p:column headerText="Alterar" style="text-align: center" >
-				 <p:commandButton 
-				 icon="ui-icon-disk" update=":formFornecedor:painelFornecedor" 
-				 actionListener="#{fornecedorBean.alterarFornecedor(Fornecedor)}"/>
+				<p:column headerText="Email">
+					<h:outputText value="#{produto.email}" />
+				</p:column>
+				
+				
+				<p:column headerText="Excluir" style="text-align: center" >
 				 <p:commandButton
-				 icon="ui-icon-close" update=":formFornecedor:dtFornecedor" 
-				 actionListener="#{produtoBean.removerFornecedor(Fornecedor)}"
-				 />
-			
-			
+				 icon="ui-icon-close" update=":formConsulta:dtFornecedor" 
+				 actionListener="#{fornecedorBean.removerFornecedor(fornecedor)}" 
+				 ></p:commandButton>
 				</p:column>
+
 			</p:dataTable>
+			
+
+			
+			<p:dialog  global="true" showEffect="fade" hideEffect="fade" widgetVar="dlg2">
+	    			<h:form id="dlgCadastro" >
+	    					Nome
+	    			<p:inputText id="nome" required="true" value="#{fornecedorBean.fornecedor.nome}" />	
+	    					Email	
+	 				<p:inputText id="valor" required="true" value="#{fornecedorBean.fornecedor.email}" />
+	 						Telefone
+	 				<p:inputText id="quantidade" required="true" value="#{fornecedorBean.fornecedor.telefone}" />
+	       						
+	       			<p:commandButton value="Cadastrar" 
+	       						actionListener="#{fornecedorBean.cadastroFornecedor()}" update=":formConsulta:dtFornecedor" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	  						 </h:form>
+	  						  </p:dialog>
+			
 
 		</h:form>
+
 	</ui:define>
-	</ui:composition>
-	</html>
+</ui:composition>
+</html>
